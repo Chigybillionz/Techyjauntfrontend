@@ -44,18 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-
+// Show success message after form submission
 document.getElementById('signup-btn').addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent form submission
-    document.getElementById('main-section').classList.add('hidden'); // Hide main section
-    document.getElementById('success-section').classList.remove('hidden'); // Show success section
+    e.preventDefault(); 
+    document.getElementById('main-section').classList.add('hidden'); 
+    document.getElementById('success-section').classList.remove('hidden'); 
 });
 
-
+// this for the opening of the welcome back section
  document.addEventListener('DOMContentLoaded', function () {
-    // Select the login button in the success section
     const loginBtn = document.querySelector('#success-section .Enter');
-    // Select the success section and welcomeback section
     const successSection = document.getElementById('success-section');
     const welcomeBackSection = document.querySelector('.welcomeback');
 
@@ -67,6 +65,21 @@ document.getElementById('signup-btn').addEventListener('click', function(e) {
     }
   });
 
+
+  // this for the opening of the forgottpassowrd section
+   document.addEventListener('DOMContentLoaded', function () {
+    const forgotBtn = document.querySelector('.forgotpassword');
+    const passwordPage = document.querySelector('.passwordpage');
+    const loginSection = forgotBtn.closest('.welcomeback');
+
+    if (forgotBtn && passwordPage && loginSection) {
+      forgotBtn.addEventListener('click', function (e) {
+        e.preventDefault(); 
+        loginSection.classList.add('hidden');
+        passwordPage.classList.remove('hidden');
+      });
+    }
+  });
 
 
 
