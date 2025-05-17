@@ -56,3 +56,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+document.getElementById('report-outage-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Hide the hero section
+    document.querySelector('.front-page').style.display = 'none';
+    // Show the main-section
+    document.getElementById('main-section').classList.remove('hidden');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
+            
+            mobileMenu.classList.toggle('open');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+        }
