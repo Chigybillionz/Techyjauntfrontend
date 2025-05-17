@@ -52,6 +52,21 @@ document.getElementById('signup-btn').addEventListener('click', function(e) {
 });
 
 
+ document.addEventListener('DOMContentLoaded', function () {
+    // Select the login button in the success section
+    const loginBtn = document.querySelector('#success-section .Enter');
+    // Select the success section and welcomeback section
+    const successSection = document.getElementById('success-section');
+    const welcomeBackSection = document.querySelector('.welcomeback');
+
+    if (loginBtn && successSection && welcomeBackSection) {
+      loginBtn.addEventListener('click', function () {
+        successSection.classList.add('hidden');
+        welcomeBackSection.classList.remove('hidden');
+      });
+    }
+  });
+
 
 
 
