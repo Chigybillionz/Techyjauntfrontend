@@ -1,10 +1,16 @@
-// the first outtage click
-document.getElementById('report-outage-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.front-page').style.display = 'none';
-    // Show the main-section
-    document.getElementById('main-section').classList.remove('hidden');
-});
+// // the first outtage click
+// document.getElementById('report-outage-btn').addEventListener('click', function(e) {
+//     e.preventDefault();
+//     document.querySelector('.fullhomepage').style.display = 'none';
+//     // Show the main-section
+//     // document.getElementById('main-section').classList.remove('hidden');
+//         document.querySelector('.fullhomepage').classList.remove('hidden');
+
+// });
+  document.getElementById('report-outage-btn').addEventListener('click', function() {
+    document.querySelector('.front-page').classList.add('hidden');
+    document.querySelector('.fullhomepage').classList.remove('hidden');
+  });
 
 
 
