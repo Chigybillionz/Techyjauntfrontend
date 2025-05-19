@@ -1,16 +1,53 @@
-// // the first outtage click
-// document.getElementById('report-outage-btn').addEventListener('click', function(e) {
-//     e.preventDefault();
-//     document.querySelector('.fullhomepage').style.display = 'none';
-//     // Show the main-section
-//     // document.getElementById('main-section').classList.remove('hidden');
-//         document.querySelector('.fullhomepage').classList.remove('hidden');
+//the first page signup clicking 
+document.querySelectorAll('.topclick a')[0].addEventListener('click', function(e) {
+  e.preventDefault();
+  document.querySelector('.front-page').classList.add('hidden');
+  document.getElementById('main-section').classList.remove('hidden');
+});
 
-// });
+document.querySelectorAll('.topclick a')[1].addEventListener('click', function(e) {
+  e.preventDefault();
+  document.querySelector('.front-page').classList.add('hidden');
+  document.querySelector('.welcomeback').classList.remove('hidden');
+});
+
+
+
+// this is for the forgotten passord link that has an imagen at the frame top 
+document.querySelector('.clikingforgotimage').addEventListener('click', function() {
+  document.querySelector('.passwordpage').classList.add('hidden');
+  document.getElementById('reset-password-form').classList.remove('hidden');
+});
+
+
+
+
+
+
+// when the report outage button is clicked in the first home page
   document.getElementById('report-outage-btn').addEventListener('click', function() {
     document.querySelector('.front-page').classList.add('hidden');
     document.querySelector('.fullhomepage').classList.remove('hidden');
   });
+
+  // Select the Sign up button inside .anothersigning in the second home page 
+  document.querySelectorAll('.anothersigning a')[0].addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('.fullhomepage').classList.add('hidden');
+    document.getElementById('main-section').classList.remove('hidden');
+  });
+// when the lgin button is clicked in the second home page 
+ document.addEventListener('DOMContentLoaded', function() {
+    const loginBtn = document.querySelector('.anothersigning a:nth-child(2)');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.fullhomepage').classList.add('hidden');
+        document.querySelector('.welcomeback').classList.remove('hidden');
+      });
+    }
+  });
+
 
 
 
