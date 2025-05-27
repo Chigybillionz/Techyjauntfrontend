@@ -47,6 +47,9 @@
             max-width: 60%;
             max-height: 60%;
         }
+        input:invalid {
+            border-color: #f87171;
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 bg-gray-100">
@@ -70,23 +73,27 @@
                 Welcome to wattwatch, create an account to get started
             </p>
             
-            <form class="space-y-6">
+            <form id="signupForm" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                     <input 
                         type="text" 
+                        id="fullName"
                         placeholder="Eg. Miracle Joseph" 
                         class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition duration-200" 
                         required>
+                    <p id="nameError" class="mt-1 text-sm text-red-600"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
                     <input 
                         type="email" 
+                        id="email"
                         placeholder="mary780@gmail.com" 
                         class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition duration-200" 
                         required>
+                    <p id="emailError" class="mt-1 text-sm text-red-600"></p>
                 </div>
 
                 <div class="relative">
@@ -108,6 +115,16 @@
                             </svg>
                         </button>
                     </div>
+                    <p id="passwordError" class="mt-1 text-sm text-red-600"></p>
+                    <div id="passwordStrength" class="mt-2">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div id="strengthBar1" class="h-1 w-1/4 rounded-full bg-gray-300"></div>
+                            <div id="strengthBar2" class="h-1 w-1/4 rounded-full bg-gray-300"></div>
+                            <div id="strengthBar3" class="h-1 w-1/4 rounded-full bg-gray-300"></div>
+                            <div id="strengthBar4" class="h-1 w-1/4 rounded-full bg-gray-300"></div>
+                        </div>
+                        <p id="strengthText" class="text-xs text-gray-500">Password strength</p>
+                    </div>
                 </div>
 
                 <div class="relative">
@@ -115,11 +132,11 @@
                     <div class="relative">
                         <input 
                             type="password" 
-                            id="confirm-password" 
+                            id="confirmPassword" 
                             required 
                             placeholder="Confirm Password" 
                             class="w-full px-4 py-3 pr-10 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition duration-200">
-                        <button type="button" onclick="togglePasswordVisibility('confirm-password')" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                        <button type="button" onclick="togglePasswordVisibility('confirmPassword')" class="absolute inset-y-0 right-0 flex items-center pr-3">
                             <svg id="eye-icon-confirm" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -129,14 +146,14 @@
                             </svg>
                         </button>
                     </div>
+                    <p id="confirmPasswordError" class="mt-1 text-sm text-red-600"></p>
                 </div>
-                <a href="./Accountcreationsuccess.html" class="w-full max-w-xs"></a>
+
                 <button 
                     type="submit" 
-                    class="w-full bg-primary hover:bg-primaryDark text-white font-semibold py-3 px-4 rounded-2xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    class="w-full bg-primary hover:bg-primaryDark text-white font-semibold py-3 px-4 rounded-2xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 mt-6">
                     Sign Up
                 </button>
-                </a>
 
                 <div class="flex items-center my-6">
                     <div class="flex-grow h-px bg-gray-300"></div>
@@ -182,6 +199,134 @@
                 eyeOffIcon.classList.add('hidden');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signupForm');
+            const fullName = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            
+            // Password strength indicators
+            const strengthBars = [
+                document.getElementById('strengthBar1'),
+                document.getElementById('strengthBar2'),
+                document.getElementById('strengthBar3'),
+                document.getElementById('strengthBar4')
+            ];
+            const strengthText = document.getElementById('strengthText');
+            
+            // Validate name - letters and spaces only, min 2 chars
+            function validateName() {
+                const nameRegex = /^[a-zA-Z\s]{2,}$/;
+                if (!nameRegex.test(fullName.value)) {
+                    document.getElementById('nameError').textContent = 'Please enter a valid name (letters and spaces only, min 2 chars)';
+                    return false;
+                }
+                document.getElementById('nameError').textContent = '';
+                return true;
+            }
+            
+            // Validate email format
+            function validateEmail() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                    return false;
+                }
+                document.getElementById('emailError').textContent = '';
+                return true;
+            }
+            
+            // Check password strength and update visual indicator
+            function checkPasswordStrength() {
+                const value = password.value;
+                let strength = 0;
+                
+                // Length check
+                if (value.length >= 8) strength++;
+                // Uppercase check
+                if (/[A-Z]/.test(value)) strength++;
+                // Number check
+                if (/\d/.test(value)) strength++;
+                // Special char check
+                if (/[^A-Za-z0-9]/.test(value)) strength++;
+                
+                // Update strength bars
+                strengthBars.forEach((bar, index) => {
+                    if (index < strength) {
+                        bar.classList.remove('bg-gray-300');
+                        if (strength <= 2) {
+                            bar.classList.add('bg-red-500');
+                        } else if (strength === 3) {
+                            bar.classList.add('bg-yellow-500');
+                        } else {
+                            bar.classList.add('bg-green-500');
+                        }
+                    } else {
+                        bar.classList.add('bg-gray-300');
+                        bar.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-green-500');
+                    }
+                });
+                
+                // Update strength text
+                const strengthMessages = [
+                    'Very weak',
+                    'Weak',
+                    'Medium',
+                    'Strong',
+                    'Very strong'
+                ];
+                strengthText.textContent = `Password strength: ${strengthMessages[strength]}`;
+                
+                return strength >= 3; // Require at least medium strength
+            }
+            
+            // Validate password meets requirements
+            function validatePassword() {
+                if (!checkPasswordStrength()) {
+                    document.getElementById('passwordError').textContent = 'Password must be at least 8 characters with uppercase, number, and special character';
+                    return false;
+                }
+                document.getElementById('passwordError').textContent = '';
+                return true;
+            }
+            
+            // Validate passwords match
+            function validateConfirmPassword() {
+                if (password.value !== confirmPassword.value) {
+                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                    return false;
+                }
+                document.getElementById('confirmPasswordError').textContent = '';
+                return true;
+            }
+            
+            // Event listeners for real-time validation
+            fullName.addEventListener('input', validateName);
+            email.addEventListener('input', validateEmail);
+            password.addEventListener('input', function() {
+                validatePassword();
+                // If confirm password has value, validate it too
+                if (confirmPassword.value) validateConfirmPassword();
+            });
+            confirmPassword.addEventListener('input', validateConfirmPassword);
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                const isConfirmPasswordValid = validateConfirmPassword();
+                
+                if (isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+                    // Form is valid - submit or redirect
+                    window.location.href = './Accountcreationsuccess.html';
+                }
+            });
+        });
     </script>
 </body>
 </html>
